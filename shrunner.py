@@ -31,8 +31,6 @@ def get_files(lst, ext='.dvl'):
 if __name__ == '__main__':
 	import sys
 	if len(sys.argv) > 1:
-		print(sys.argv)
-		print(sys.argv[1:])
 		for file in get_files(sys.argv[1:]):
 			os.system('sh Scripts/slurm_runner.sh ' + script_path + ' ' + file)
 
