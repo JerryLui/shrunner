@@ -6,7 +6,7 @@ script_path = '/mnt/plkra/projects/users'
 ## Code
 def ifiles(path):
 	""" Returns an iterator with absolute path to files in path. """
-	for file in os.listdir(path)
+	for file in os.listdir(path):
 		if os.path.isfile(os.path.join(path, file)):
 			yield os.path.join(path, file)
 
