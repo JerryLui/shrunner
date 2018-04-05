@@ -14,7 +14,7 @@ def get_files(lst, ext='.dvl'):
 	""" Returns a list of files from args. """
 	file_list = []
 	for arg in lst:
-		if os.path.isdir(arg):		# Find all
+		if os.path.isdir(arg):
 			file_list.extend([file for file in ifiles(arg) if file.endswith(ext)])
 
 		elif os.path.isfile(arg):
@@ -32,5 +32,5 @@ if __name__ == '__main__':
 	import sys
 	if len(sys.argv) > 1:
 		for file in get_files(sys.argv[1:]):
-			os.system('sh Scripts/slurm_runner.sh ' + script_path + ' ' + file)
+			os.system('sh Scripts/slurm_runner.sh ' + script_path + ' ' + file + ' > /dev/null')
 
