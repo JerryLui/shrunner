@@ -7,9 +7,11 @@ slurm_script_path = '/mnt/plkra/users/mjbf5f/Projects/shrunner/Scripts/slurm_run
 ## Code
 def ifiles(path):
 	""" Returns an iterator with absolute path to files in path. """
+	path = os.path.expanduser(path)
 	for file in os.listdir(path):
 		if os.path.isfile(os.path.join(path, file)):
 			yield os.path.join(path, file)
+
 
 def get_files(lst, ext='.dvl'):
 	""" Returns a list of files from args. """
@@ -28,6 +30,17 @@ def get_files(lst, ext='.dvl'):
 		else:
 			raise FileNotFoundError()
 	return file_list
+
+
+def slurm_check(path='.'):
+	""" Quick check for slurm outputs if any issues are found """
+	for file in os.ifiles(path):
+		with open(file, 'r') as f:
+			for line in f.read().splitlines():
+				if 'issue' in line.lower():
+					print(file)
+					print(line)
+					print('-'*40)
 
 if __name__ == '__main__':
 	import sys
