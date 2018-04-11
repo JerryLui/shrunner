@@ -2,7 +2,6 @@ import os
 
 ## Config
 script_path = '/mnt/plkra/projects/VGTT/users/Script_Checkout/read_vasp_data'
-
 slurm_script_path = '/mnt/plkra/users/mjbf5f/Projects/shrunner/Scripts/slurm_runner.sh'
 
 ## Code
@@ -35,6 +34,6 @@ if __name__ == '__main__':
 	if len(sys.argv) > 1:
 		os.system('module load mcr/8.1')
 		for index, file in enumerate(get_files(sys.argv[1:])):
-			exc_str = ['sbatch', 'Scripts/slurm_runner.sh', script_path, file, str(index)]
+			exc_str = ['sbatch', slurm_script_path, script_path, file, str(index)]
 			os.system(' '.join(exc_str))
 
