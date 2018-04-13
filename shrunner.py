@@ -4,7 +4,7 @@ import os
 script_path = '/mnt/plkra/projects/VGTT/users/Script_Checkout/read_vasp_data'
 slurm_script_path = '/mnt/plkra/users/mjbf5f/Projects/shrunner/Scripts/slurm_runner.sh'
 
-## Code
+## PRIVATE FUNCTIONS
 def ifiles(path):
 	""" Returns an iterator with absolute path to files in path. """
 	path = os.path.expanduser(path)
@@ -51,6 +51,8 @@ if __name__ == '__main__':
 		else:
 			ext_files = get_files(sys.argv[1:])
 			os.putenv('FILES', ' '.join(ext_files))
-			exc_str = ['sbatch', '-a 1-' + str(len(ext_files)), slurm_script_path, script_path, 'FILES']
+			exc_str = ['sbatch', '--array=1-' + str(len(ext_files)), slurm_script_path, script_path, '$FILES']
 			os.system(' '.join(exc_str))
+	else:
+		print('Not enough inputs.')
 
