@@ -14,7 +14,7 @@ def ifiles(path):
 
 
 def get_files(lst, ext='.dvl'):
-	""" Returns a list of files from args. """
+	""" Returns a list of files in lst of directories with file extension ext. """
 	file_list = []
 	for arg in lst:
 		if os.path.isdir(arg):
@@ -49,8 +49,8 @@ if __name__ == '__main__':
 		if sys.argv[1] == "check":
 			slurm_check(sys.argv[2])
 		else:
-			os.system('module load mcr/8.1')
-			for index, file in enumerate(get_files(sys.argv[1:])):
-				exc_str = ['sbatch', slurm_script_path, script_path, file, str(index)]
-				os.system(' '.join(exc_str))
+			ext_files = get_files(sys.argv[1:])
+			os.putenv('FILES', ' '.join(ext_files))
+			exc_str = ['sbatch', '-a 1-' + str(len(ext_files)), slurm_script_path, script_path, 'FILES']
+			os.system(' '.join(exc_str))
 
