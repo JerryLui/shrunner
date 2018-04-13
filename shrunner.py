@@ -34,19 +34,23 @@ def get_files(lst, ext='.dvl'):
 
 def slurm_check(path='.'):
 	""" Quick check for slurm outputs if any issues are found """
-	for file in os.ifiles(path):
-		with open(file, 'r') as f:
-			for line in f.read().splitlines():
-				if 'issue' in line.lower():
-					print(file)
-					print(line)
-					print('-'*40)
+	for file in ifiles(path):
+		if file.endswith('.out'):
+			with open(file, 'r') as f:
+				for line in f.read().splitlines():
+					if 'issue' in line.lower():
+						print(file)
+						print(line)
+						print('-'*40)
 
 if __name__ == '__main__':
 	import sys
 	if len(sys.argv) > 1:
-		os.system('module load mcr/8.1')
-		for index, file in enumerate(get_files(sys.argv[1:])):
-			exc_str = ['sbatch', slurm_script_path, script_path, file, str(index)]
-			os.system(' '.join(exc_str))
+		if sys.argv[1] == "check":
+			slurm_check(sys.argv[2])
+		else:
+			os.system('module load mcr/8.1')
+			for index, file in enumerate(get_files(sys.argv[1:])):
+				exc_str = ['sbatch', slurm_script_path, script_path, file, str(index)]
+				os.system(' '.join(exc_str))
 
