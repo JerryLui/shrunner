@@ -1,7 +1,7 @@
 import os
 
 ## Config
-script_path = '/mnt/plkra/projects/VGTT/users/Script_Checkout/read_vasp_data'
+mat_script_path = '/mnt/plkra/projects/VGTT/users/Script_Checkout/read_vasp_data'
 slurm_script_path = '/mnt/plkra/users/mjbf5f/Projects/shrunner/Scripts/slurm_runner.sh'
 
 ## PRIVATE FUNCTIONS
@@ -49,10 +49,9 @@ if __name__ == '__main__':
 		if sys.argv[1] == "check":
 			slurm_check(sys.argv[2])
 		else:
-			ext_files = get_files(sys.argv[1:])
-			os.putenv('FILES', ' '.join(ext_files))
-			exc_str = ['sbatch', '--array=1-' + str(len(ext_files)), slurm_script_path, script_path, '$FILES']
-			os.system(' '.join(exc_str))
+			for file in get_files(sys.argv[1:]):
+				exc_str = ['sbatch', slurm_script_path, mat_script_path, file]
+				os.system(' '.join(exc_str))
 	else:
 		print('Not enough inputs.')
 
