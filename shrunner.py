@@ -31,6 +31,7 @@ def get_files(path, ext):
 
 
 def _get_slurm_script_path():
+    """ Gets slurm_runner.sh script path """
     return os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Scripts/slurm_runner.sh')
 
 
