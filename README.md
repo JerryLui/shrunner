@@ -2,7 +2,7 @@
 The best job scheduler for .mat generation on HPCC.
 
 ### Beginner guide:
-To run mat generation on your folder, do the following (replace path/to/dvl/folder)
+To run mat generation on your HPCC folder, do the following (replace path/to/dvl/folder)
     
     $: echo module load python >> ~/.bashrc
     $: source ~/.bashrc
