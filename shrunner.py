@@ -1,57 +1,49 @@
 import os
 
-## Config
-mat_script_path = '/mnt/plkra/projects/VGTT/users/Script_Checkout/read_vasp_data'
-slurm_script_path = '/mnt/plkra/users/mjbf5f/Projects/shrunner/Scripts/slurm_runner.sh'
 
-## PRIVATE FUNCTIONS
 def ifiles(path):
-	""" Returns an iterator with absolute path to files in path. """
-	path = os.path.expanduser(path)
-	for file in os.listdir(path):
-		if os.path.isfile(os.path.join(path, file)):
-			yield os.path.join(path, file)
+    """ Returns an iterator with absolute path to files in path. """
+    path = os.path.expanduser(path)
+    for file in os.listdir(path):
+        if os.path.isfile(os.path.join(path, file)):
+            yield os.path.join(path, file)
 
 
-def get_files(lst, ext='.dvl'):
-	""" Returns a list of files in lst of directories with file extension ext. """
-	file_list = []
-	for arg in lst:
-		if os.path.isdir(arg):
-			file_list.extend([file for file in ifiles(arg) if file.endswith(ext)])
+def get_files(path, ext):
+    """ Returns a list of files in lst of directories with file extension %(ext). """
+    file_list = []
+    if os.path.isdir(path):
+        # Append directory to file_list
+        file_list.extend([file for file in ifiles(path) if file.endswith(ext)])
 
-		elif os.path.isfile(arg):
-			if arg.endswith(('.txt')):
-				with open(arg, 'r') as f:
-					file_list.extend([line.rstrip() for line in f.readlines()])
-			elif arg.endswith(ext):
-				file_list.append(arg)
+    elif os.path.isfile(path):
+        if path.endswith('.list'):
+            # Read and extract file paths ending with %(ext) from .list file
+            with open(path, 'r') as f:
+                file_list.extend([line.rstrip() for line in f.readlines() if line.endswith(ext)])
+        elif path.endswith(ext):
+            # Add file to file_list if it ends with %(ext)
+            file_list.append(path)
+    else:
+        # If no files found
+        raise FileNotFoundError()
+    return file_list
 
-		else:
-			raise FileNotFoundError()
-	return file_list
+
+def _get_slurm_script_path():
+    return os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Scripts/slurm_runner.sh')
 
 
-def slurm_check(path='.'):
-	""" Quick check for slurm outputs if any issues are found """
-	for file in ifiles(path):
-		if file.endswith('.out'):
-			with open(file, 'r') as f:
-				for line in f.read().splitlines():
-					if 'issue' in line.lower():
-						print(file)
-						print(line)
-						print('-'*40)
+def main(folder_path, mat_script_path='/mnt/plkra/projects/VGTT/users/Script_Checkout/read_vasp_data', ext='.dvl'):
+    slurm_script_path = _get_slurm_script_path()
+    for file in get_files(folder_path, ext):
+        exc_str = ['sbatch', slurm_script_path, mat_script_path, file]
+        os.system(' '.join(exc_str))
+
 
 if __name__ == '__main__':
-	import sys
-	if len(sys.argv) > 1:
-		if sys.argv[1] == "check":
-			slurm_check(sys.argv[2])
-		else:
-			for file in get_files(sys.argv[1:]):
-				exc_str = ['sbatch', slurm_script_path, mat_script_path, file]
-				os.system(' '.join(exc_str))
-	else:
-		print('Not enough inputs.')
-
+    """ Compability mode """
+    import sys
+    print('Warning: this mode is getting deleted next version.',
+            '\nPlease call shrunner folder instead of shrunner/shrunner.py')
+    main(sys.argv[1])
