@@ -12,6 +12,8 @@ def ifiles(path):
 def get_files(path, ext):
     """ Returns a list of files in lst of directories with file extension %(ext). """
     file_list = []
+
+    path = os.path.normpath(os.path.expanduser(path))
     if os.path.isdir(path):
         # Append directory to file_list
         file_list.extend([file for file in ifiles(path) if file.endswith(ext)])
@@ -37,9 +39,10 @@ def _get_slurm_script_path():
 
 def main(folder_path, mat_script_path='/mnt/plkra/projects/VGTT/users/Script_Checkout/read_vasp_data', ext='.dvl'):
     slurm_script_path = _get_slurm_script_path()
-    for file in get_files(folder_path, ext):
-        exc_str = ['sbatch', slurm_script_path, mat_script_path, file]
-        os.system(' '.join(exc_str))
+    files = get_files(folder_path, ext)
+    os.putenv('LISTOFLOGS', ' '.join(files))
+    exc_str = ['sbatch', '-a 0-' + str(len(files)-1), slurm_script_path, mat_script_path]
+    os.system(' '.join(exc_str))
 
 
 if __name__ == '__main__':
