@@ -10,8 +10,10 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 PATH_SCRIPT=$1
+DIRNAME=$2
 PATH_FILE=(${LISTOFLOGS})
 PATH_FILE=${PATH_FILE[$SLURM_ARRAY_TASK_ID]}
+PATH_FILE="$DIRNAME/$PATH_FILE"
 
 module load mcr/8.1
 

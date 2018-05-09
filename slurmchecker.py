@@ -16,3 +16,5 @@ if __name__ == '__main__':
     import sys
     for folder in sys.argv[1:]:
         slurm_check(folder)
+    print('Done')
+

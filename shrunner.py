@@ -1,53 +1,37 @@
 import os
-
-
-def ifiles(path):
-    """ Returns an iterator with absolute path to files in path. """
-    path = os.path.expanduser(path)
-    for file in os.listdir(path):
-        if os.path.isfile(os.path.join(path, file)):
-            yield os.path.join(path, file)
+from subprocess import call
 
 
 def get_files(path, ext):
     """ Returns a list of files in lst of directories with file extension %(ext). """
-    file_list = []
+    path = os.path.expanduser(path)
 
-    path = os.path.normpath(os.path.expanduser(path))
     if os.path.isdir(path):
-        # Append directory to file_list
-        file_list.extend([file for file in ifiles(path) if file.endswith(ext)])
-
+        return [os.path.join(path, file) for file in os.listdir(path) if file.endswith(ext)]
     elif os.path.isfile(path):
         if path.endswith('.list'):
-            # Read and extract file paths ending with %(ext) from .list file
             with open(path, 'r') as f:
-                file_list.extend([line.rstrip() for line in f.readlines() if line.endswith(ext)])
+                return [line.rstrip() for line in f.readlines() if line.endswith(ext)]
         elif path.endswith(ext):
-            # Add file to file_list if it ends with %(ext)
-            file_list.append(path)
+            return path
     else:
         # If no files found
         raise FileNotFoundError()
     return file_list
 
 
-def _get_slurm_script_path():
-    """ Gets slurm_runner.sh script path """
-    return os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Scripts/slurm_runner.sh')
-
-
 def main(folder_path, mat_script_path='/mnt/plkra/projects/VGTT/users/Script_Checkout/read_vasp_data', ext='.dvl'):
-    slurm_script_path = _get_slurm_script_path()
+    slurm_script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Scripts/slurm_runner.sh')
     files = get_files(folder_path, ext)
+    folder_path = os.path.split(files[0])[0]
+    files = [os.path.split(file)[1] for file in files]
     os.putenv('LISTOFLOGS', ' '.join(files))
-    exc_str = ['sbatch', '-a 0-' + str(len(files)-1), slurm_script_path, mat_script_path]
-    os.system(' '.join(exc_str))
+    exc = ['sbatch', '-a', '0-' + str(len(files)-1), slurm_script_path, mat_script_path, folder_path]
+    print('executing:', ' '.join(exc))
+    call(exc)
 
 
 if __name__ == '__main__':
     """ Compability mode """
     import sys
-    print('Warning: this mode is getting deleted next version.',
-            '\nPlease call shrunner folder instead of shrunner/shrunner.py')
     main(sys.argv[1])
