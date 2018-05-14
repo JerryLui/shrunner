@@ -2,7 +2,6 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #SBATCH --time=15:00
 #SBATCH -A VGTT
-#SBATCH --job-name=JERRYXL
 #SBATCH --mail-user=jerry.x.liu@aptiv.com
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # Author: Jerry Liu		(jerry.x.liu@aptiv.com)
