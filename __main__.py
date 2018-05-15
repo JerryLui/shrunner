@@ -5,7 +5,7 @@ import slurmchecker
 parser = argparse.ArgumentParser(
         description='Simple script to run .mat generation on folders (non recursive) on HPC',
         prog='shrunner',
-        usage='python %(prog)s [-h] full_dvl_folder_path'
+        usage='python %(prog)s [-h] full_dvl_folder_path [--script] [--extension]'
 )
 
 parser.add_argument(
@@ -13,27 +13,19 @@ parser.add_argument(
         help='Full folder path to folder to run .mat generation on. Works with file lists ending with .list as well.'
 )
 
+parser.add_argument(
+         '--script',
+         help='The script to run on files. (default: %(default)s)',
+         metavar='',
+         default='/mnt/plkra/projects/VGTT/users/Script_Checkout/read_vasp_data'
+)
 
-# parser.add_argument(
-#         '--script',
-#         help='The script to run on files. (default: %(default)s',
-#         metavar='',
-#         default=''
-# )
-#
-# parser.add_argument(
-#         '-e', '--extension',
-#         help='Log file type. (default: %(default)s)',
-#         metavar='',
-#         default='.dvl'
-# )
-#
-# parser.add_argument(
-#         '-c', '--check',
-#         help="Search for the word 'issue' in mat files in folder given folder.",
-#         metavar='',
-#         dest='check'
-# )
+parser.add_argument(
+         '--extension',
+         help='File type to run script on. (default: %(default)s)',
+         metavar='',
+         default='.dvl'
+)
 
 args = parser.parse_args()
-shrunner.main(args.folder_path)
+shrunner.main(args.folder_path, args.script)

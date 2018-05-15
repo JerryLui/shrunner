@@ -36,7 +36,7 @@ def main(folder_path, mat_script_path='/mnt/plkra/projects/VGTT/users/Script_Che
         os.putenv('LISTOFLOGS', ' '.join(files))
         exc = ['sbatch', '-a', '0-' + str(len(files)-1), '--job-name', dirname, slurm_script_path,
                 mat_script_path, folder]
-        print('executing:', ' '.join(exc))
+        print('\nexecuting:', ' '.join(exc))
         call(exc)
 
 
