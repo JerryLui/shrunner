@@ -5,7 +5,7 @@ import slurmchecker
 parser = argparse.ArgumentParser(
         description='Simple script to run .mat generation on folders (non recursive) on HPC',
         prog='shrunner',
-        usage='python %(prog)s [-h] full_dvl_folder_path [--script] [--extension]'
+        usage='python %(prog)s [-h] full_dvl_folder_path [--script] [--extension] [-d, --directory]'
 )
 
 parser.add_argument(
@@ -27,5 +27,12 @@ parser.add_argument(
          default='.dvl'
 )
 
+parser.add_argument(
+        '-d', '--directory',
+        help='To run script on directories instead of individual files. (default: %(default)s)',
+        metavar='',
+        action='store_true'
+)
+
 args = parser.parse_args()
-shrunner.main(args.folder_path, args.script)
+shrunner.main(args.folder_path, args.script, args.extension, args.directory)
