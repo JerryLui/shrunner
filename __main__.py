@@ -1,6 +1,5 @@
 import argparse
 import shrunner
-import slurmchecker
 
 parser = argparse.ArgumentParser(
         description='Simple script to run .mat generation on folders (non recursive) on HPC',
