@@ -30,7 +30,6 @@ parser.add_argument(
 parser.add_argument(
         '-d', '--directory',
         help='To run script on directories instead of individual files. (default: %(default)s)',
-        metavar='',
         action='store_true'
 )
 
