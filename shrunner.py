@@ -29,8 +29,9 @@ def get_files(path, ext):
 
 
 def get_folders(path):
+    path = os.path.expanduser(path)
     if os.path.isdir(path):
-        raise OSError(2, '--directory option only accepts file lists containing directories.', path)
+        return [path]
     elif os.path.isfile(path):
         with open(path, 'r') as f:
             return [line.rstrip() for line in f.readlines()]
