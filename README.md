@@ -1,5 +1,6 @@
 ## shrunner
-The best job scheduler for .mat generation on HPCC.
+The best job scheduler for matlab scripting on HPCC.
+To compile MATLAB scripts use [Grand Compile Auto](http://10.239.124.134:5000/).
 
 ### Beginner guide:
 To run mat generation on your HPCC folder, do the following (replace path/to/dvl/folder)
@@ -31,3 +32,5 @@ P.S. this works with file lists ending with .list
 For usage help try
     
     $: python shrunner -h
+    
+Shrunner can read file/folder lists and run recursivley.
