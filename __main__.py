@@ -4,7 +4,7 @@ import shrunner
 parser = argparse.ArgumentParser(
         description='Simple script to run .mat generation on folders (non recursive) on HPC',
         prog='shrunner',
-        usage='python %(prog)s [-h] full_dvl_folder_path [--script] [--extension] [-d, --directory]'
+        usage='python %(prog)s [-h] full_dvl_folder_path [--script] [-e, --extension] [-d, --directory] [-r, --recursive]'
 )
 
 parser.add_argument(
@@ -14,20 +14,20 @@ parser.add_argument(
 
 parser.add_argument(
          '--script',
-         help='The script to run on files. (default: %(default)s)',
+         help='Path to script to run on folder/file. (default: %(default)s)',
          metavar='',
          default='/mnt/plkra/projects/VGTT/users/Script_Checkout/read_vasp_data'
 )
 
 parser.add_argument(
-         '--extension',
+         '-e', '--extension',
          help='File type to run script on. (default: %(default)s)',
          metavar='',
          default='.dvl'
 )
 
 parser.add_argument(
-        '--directory',
+        '-d', '--directory',
         help='Run script on directories instead of individual files. (default: %(default)s)',
         action='store_true'
 )
