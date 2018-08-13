@@ -27,10 +27,16 @@ parser.add_argument(
 )
 
 parser.add_argument(
-        '-d', '--directory',
-        help='To run script on directories instead of individual files. (default: %(default)s)',
+        '--directory',
+        help='Run script on directories instead of individual files. (default: %(default)s)',
+        action='store_true'
+)
+
+parser.add_argument(
+        '-r', '--recursive',
+        help='Search recursivley for files. (default: %(default)s)',
         action='store_true'
 )
 
 args = parser.parse_args()
-shrunner.main(args.folder_path, args.script, args.extension, args.directory)
+shrunner.main(args.folder_path, args.script, args.extension, args.directory, args.recursive)
