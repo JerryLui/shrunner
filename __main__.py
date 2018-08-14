@@ -4,7 +4,7 @@ import shrunner
 parser = argparse.ArgumentParser(
         description='Simple script to run .mat generation on folders (non recursive) on HPC',
         prog='shrunner',
-        usage='python %(prog)s [-h] full_dvl_folder_path [--script] [-e, --extension] [-d, --directory] [-r, --recursive]'
+        usage='python %(prog)s [-h] full_dvl_folder_path [--script script_path] [-e, --extension file_type] [-d, --directory] [-r, --recursive]'
 )
 
 parser.add_argument(
