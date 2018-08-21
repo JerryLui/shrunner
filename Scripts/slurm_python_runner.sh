@@ -14,9 +14,9 @@ PATH_FILE=(${LISTOFLOGS})
 PATH_FILE=${PATH_FILE[$SLURM_ARRAY_TASK_ID]}
 PATH_FILE="$DIRNAME/$PATH_FILE"
 
-module load mcr/8.1
+module load python
 
-echo "exec ${PATH_SCRIPT} ${PATH_FILE}"
-exec ${PATH_SCRIPT} ${PATH_FILE}
+echo "python ${PATH_SCRIPT} ${PATH_FILE}"
+python ${PATH_SCRIPT} ${PATH_FILE}
 
 module purge

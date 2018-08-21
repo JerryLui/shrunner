@@ -9,14 +9,12 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 PATH_SCRIPT=$1
-DIRNAME=$2
-PATH_FILE=(${LISTOFLOGS})
-PATH_FILE=${PATH_FILE[$SLURM_ARRAY_TASK_ID]}
-PATH_FILE="$DIRNAME/$PATH_FILE"
+PATH_FOLDER=(${LISTOFFOLDERS})
+PATH_FOLDER=${PATH_FOLDER[$SLURM_ARRAY_TASK_ID]}
 
-module load mcr/8.1
+module load python
 
-echo "exec ${PATH_SCRIPT} ${PATH_FILE}"
-exec ${PATH_SCRIPT} ${PATH_FILE}
+echo "python ${PATH_SCRIPT} ${PATH_FOLDER}"
+python ${PATH_SCRIPT} ${PATH_FOLDER}
 
 module purge

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #SBATCH --time=15:00
 #SBATCH -A VGTT
