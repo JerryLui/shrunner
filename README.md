@@ -2,35 +2,25 @@
 The best job scheduler for matlab scripting on HPCC.
 To compile MATLAB scripts use [Grand Compile Auto](http://10.239.124.134:5000/).
 
-### Beginner guide:
-To run mat generation on your HPCC folder, do the following (replace path/to/dvl/folder)
-    
-    $: echo module load python >> ~/.bashrc
-    $: source ~/.bashrc
-    $: python /mnt/plkra/users/mjbf5f/Projects/shrunner /path/to/dvl/folder
-    
+### Basic Tutorial for .mat file generation:
 
-### More explanatory guide:
-Step 1. Ensure that python module is loaded by checking .bashrc using `cat ~/.bashrc`,
-the output should include the following:
-    
-    ...
-    module load python
-    ...
-    
-If not, add it with the following command `echo module load python >> ~/.bashrc` and reload your
+1. Clone this repository to your HPCC folder with ``` git clone https://hpc-gitlab.europe.delphiauto.net/mjbf5f/shrunner.git ```
+
+1. Ensure that python module is loaded by checking .bashrc using `cat ~/.bashrc`,
+the output should include ``` module load python ```.
+    If not, add it with the following command `echo module load python >> ~/.bashrc` and reload your
 .bashrc either by reconnecting or `source ~/.bashrc`
 
-Step 2. Run the script on your log folder to generate .mat files by navigating to the folder containing
+1. Run the script on your log folder to generate .mat files by navigating to the folder containing
 the shrunner folder and executing:
 
-    $: python shrunner /absolute/folder/path/to/your/log/files/with/dvl
+    ``` $: python shrunner /absolute/folder/path/to/your/log/files/with/dvl ```
     
-P.S. this works with file lists ending with .list
+__P.S.__ this works with file lists ending with .list
 
-### Pro guide:
-For usage help try
+### For more usage:
+Try
     
     $: python shrunner -h
     
-Shrunner can read file/folder lists and run recursivley.
+Shrunner can read file/folder lists and run recursivley. It can also run with any arbitrary matlab or python script.
