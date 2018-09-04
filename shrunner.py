@@ -41,7 +41,7 @@ def _recursive_file_scan(path, extension='.dvl', recursive=False):
     """ Recursive iterator for files in path with extension. """
     for entry in os.scandir(path):
         if entry.is_dir(follow_symlinks=False) and recursive:
-            yield from _recursive_file_scan(entry)
+            yield from _recursive_file_scan(entry, extension, recursive)
         elif os.path.splitext(entry.name)[1] == extension:
             yield entry
 
