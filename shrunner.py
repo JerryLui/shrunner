@@ -87,8 +87,8 @@ def main(folder_path,
     else:
         run_python = False
 
-    slurm_folders_script = 'Script/slurm_python_folder.sh' if run_python else 'Script/slurm_folder.sh'
-    slurm_files_script = 'Script/slurm_python_runner.sh' if run_python else 'Script/slurm_runner.sh'
+    slurm_folders_script = 'Scripts/slurm_python_folder.sh' if run_python else 'Scripts/slurm_folder.sh'
+    slurm_files_script = 'Scripts/slurm_python_runner.sh' if run_python else 'Scripts/slurm_runner.sh'
 
     folder_path = os.path.expanduser(folder_path)
 
