@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#SBATCH --time=15:00
+#SBATCH --time=30:00
 #SBATCH -A VGTT
 #SBATCH --mail-user=jerry.x.liu@aptiv.com
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
