@@ -12,7 +12,17 @@ PATH_SCRIPT=$1
 PATH_FOLDER=(${LISTOFFOLDERS})
 PATH_FOLDER=${PATH_FOLDER[$SLURM_ARRAY_TASK_ID]}
 
-module load python
+case $3 in
+27)
+    module load python/2.7.11
+    ;;
+35)
+    module load python/3.5.2
+    ;;
+*)
+    module load python
+    ;;
+esac
 
 echo "python ${PATH_SCRIPT} ${PATH_FOLDER}"
 python ${PATH_SCRIPT} ${PATH_FOLDER}

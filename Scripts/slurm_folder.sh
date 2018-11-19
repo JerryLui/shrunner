@@ -12,7 +12,17 @@ PATH_SCRIPT=$1
 PATH_FOLDER=(${LISTOFFOLDERS})
 PATH_FOLDER=${PATH_FOLDER[$SLURM_ARRAY_TASK_ID]}
 
-module load mcr/8.1
+case $3 in
+93)
+    module load mcr/9.3
+    ;;
+92)
+    module load mcr/9.2
+    ;;
+*)
+    module load mcr/8.1
+    ;;
+esac
 
 echo "exec ${PATH_SCRIPT} ${PATH_FOLDER}"
 exec ${PATH_SCRIPT} ${PATH_FOLDER}
