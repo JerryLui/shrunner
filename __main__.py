@@ -4,7 +4,7 @@ import shrunner
 parser = argparse.ArgumentParser(
         description='Simple script to run .mat generation on folders (non recursive) on HPC',
         prog='shrunner',
-        usage='python %(prog)s [-h] full_dvl_folder_path [--script script_path] [-e, --extension file_type] [-d, --directory] [-r, --recursive]'
+        usage='python %(prog)s [-h] full_dvl_folder_path [--script script_path] [-e, --extension file_type] [-d, --directory] [-r, --recursive] [-v, --version]'
 )
 
 parser.add_argument(
@@ -38,5 +38,12 @@ parser.add_argument(
         action='store_true'
 )
 
+parser.add_argument(
+        '-v', '--version',
+        help='Set module version, default is latest. (Python: [27, 35, 37 (Default)], MCR: [93, 92, 81 (Default)])',
+        metavar='',
+        default=''
+)
+
 args = parser.parse_args()
-shrunner.main(args.folder_path, args.script, args.extension, args.directory, args.recursive)
+shrunner.main(args.folder_path, args.script, args.extension, args.directory, args.recursive, args.version)

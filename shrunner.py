@@ -66,13 +66,15 @@ def main(folder_path,
          script_path='/mnt/plkra/projects/VGTT/users/Script_Checkout/read_vasp_data',
          extension='.dvl',
          directory=False,
-         recursive=False):
+         recursive=False,
+         version=''):
     """
     :param folder_path:     Full path to folder/file list (.list, .txt) to run script on.
     :param script_path: Full path to script to run on folder/file.
     :param extension:       File type to run script on.
     :param directory:       Wether or not to run only run on folders.
     :param recursive:       Wether or not to include files in subdirectories.
+    :param version:         Which module version to run in python or mcr.
     """
     # Input checks
     if directory and recursive:
@@ -101,7 +103,7 @@ def main(folder_path,
         folders = get_folders(folder_path)
         os.putenv('LISTOFFOLDERS', ' '.join(folders))
         exc = ['sbatch', '-a', '0-' + str(len(folders) - 1), '--job-name', 'DIRCHECK', slurm_script_path,
-               script_path]
+               script_path, version]
 
         print('\nExecuting:', ' '.join(exc))
         print('\nSubmitting', len(folders), 'job(s).')
@@ -116,7 +118,7 @@ def main(folder_path,
 
             os.putenv('LISTOFLOGS', ' '.join(files))
             exc = ['sbatch', '-a', '0-' + str(len(files) - 1), '--job-name', directory_name, slurm_script_path,
-                   script_path, folder]
+                   script_path, folder, version]
 
             print('\nExecuting:', ' '.join(exc))
             print('\nSubmitting', len(files), 'job(s).')
