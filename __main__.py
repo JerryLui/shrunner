@@ -34,7 +34,7 @@ parser.add_argument(
 
 parser.add_argument(
         '-r', '--recursive',
-        help='Search recursivley for files. (default: %(default)s)',
+        help='Search recursivley for files/folders. (default: %(default)s)',
         action='store_true'
 )
 

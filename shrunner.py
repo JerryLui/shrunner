@@ -26,10 +26,13 @@ def get_files(path, extension='.dvl', recursive=False):
         return [(os.path.dirname(entry.path), entry.name) for entry in _recursive_file_scan(path, extension, recursive)]
 
 
-def get_folders(path):
+def get_folders(path, recursive=False):
     """ Returns folder or list of folders if path is a file. """
     if os.path.isdir(path):
-        return [path]
+        if recursive:
+            return [os.path.abspath(e[0]) for e in os.walk(path)]
+        else:
+            return [path]
     elif os.path.isfile(path):
         with open(path, 'r') as f:
             return [line.rstrip() for line in f.readlines()]
@@ -73,7 +76,7 @@ def main(folder_path,
     :param script_path: Full path to script to run on folder/file.
     :param extension:       File type to run script on.
     :param directory:       Wether or not to run only run on folders.
-    :param recursive:       Wether or not to include files in subdirectories.
+    :param recursive:       Wether or not to include all files/folders in subdirectories.
     :param version:         Which module version to run in python or mcr.
     """
     # Input checks
@@ -96,11 +99,11 @@ def main(folder_path,
 
     # Run script on directories
     if directory:
-        print("INFO: Running on directories, file extension and recursive options ignored.")
+        print("INFO: Running on directories, file extension ignored.")
         # Get path to slurm script runner
         slurm_script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), slurm_folders_script)
 
-        folders = get_folders(folder_path)
+        folders = get_folders(folder_path, recursive)
         os.putenv('LISTOFFOLDERS', ' '.join(folders))
         exc = ['sbatch', '-a', '0-' + str(len(folders) - 1), '--job-name', 'DIRCHECK', slurm_script_path,
                script_path, version]
